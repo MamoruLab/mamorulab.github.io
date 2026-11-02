@@ -32,9 +32,9 @@ your IP address, the date and time of the request, the page requested, the refer
 operating system. GitHub logs the IP addresses of visitors for security purposes.
 
 We need this data to deliver the website, keep it stable and secure, and detect misuse. The legal basis is our
-legitimate interest in operating a secure website (Art. 6(1)(f) GDPR). {{< todo >}}[Confirm under GitHub's terms
-for our account whether GitHub processes this data on our behalf under a data processing agreement (Art. 28 GDPR)
-or as an independent controller under the GitHub General Privacy Statement, and state it here.]{{< /todo >}}
+legitimate interest in operating a secure website (Art. 6(1)(f) GDPR). GitHub processes this data as an
+independent controller, under the
+[GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 GitHub may process data in the USA; transfers are based on the EU adequacy decision for the EU-U.S. Data Privacy
 Framework, under which GitHub is certified (Art. 45 GDPR). We have no access to these logs and do not use them to
 identify you.
@@ -52,8 +52,9 @@ We use this data only to answer your enquiry and, where it relates to our servic
 contract. The legal basis is Art. 6(1)(b) GDPR for enquiries about a contract, and otherwise our legitimate interest
 in replying to messages addressed to us (Art. 6(1)(f) GDPR).
 
-Our email is hosted by {{< todo >}}[email provider, address]{{< /todo >}}, which processes it on our behalf under a
-data processing agreement.
+Our email is hosted by Proton Mail, a service of Proton AG, Route de la Galaise 32, 1228 Plan-les-Ouates,
+Switzerland, which processes it on our behalf under a data processing agreement (Art. 28 GDPR). The European
+Commission recognises Switzerland as providing an adequate level of data protection (Art. 45 GDPR).
 
 We delete enquiries once they are resolved and no follow-up is expected, at the latest
 {{< todo >}}24 months{{< /todo >}} after our last contact. If an enquiry leads to a business relationship, the

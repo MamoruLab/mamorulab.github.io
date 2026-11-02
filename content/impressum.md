@@ -12,6 +12,9 @@ lead: >-
 Company data as registered in the Firmenbuch (FN 676889a, entered 16.04.2026), published at
 https://www.evi.gv.at/f/676889a. Values marked with the todo shortcode are not in the register extract and still
 have to be filled in: don't remove a todo until the real value is known.
+
+No VAT ID (UID-Nummer) yet. Once one is issued, § 5 ECG requires it: add "VAT ID (UID-Nummer)" with the number
+(ATU + 8 digits) after the company register court.
 -->
 
 ## Company
@@ -39,9 +42,6 @@ Company register number (Firmenbuchnummer)
 Company register court (Firmenbuchgericht)
 : Handelsgericht Wien
 
-VAT ID (UID-Nummer)
-: ATU{{< todo >}}00000000{{< /todo >}}
-
 Managing directors (Geschäftsführer)
 : Arnab Roy, Luca Campa, Stefano Trevisani
 
@@ -58,7 +58,7 @@ Trade authority (Gewerbebehörde)
 : {{< todo >}}Magistratisches Bezirksamt für den 14. Bezirk, Wien{{< /todo >}}
 
 Chamber membership
-: Wirtschaftskammer Österreich, Wirtschaftskammer Wien{{< todo >}}, Fachgruppe Unternehmensberatung, Buchhaltung und Informationstechnologie (UBIT){{< /todo >}}
+: Wirtschaftskammer Österreich, Wirtschaftskammer Wien, {{< todo >}}Fachgruppe Unternehmensberatung, Buchhaltung und Informationstechnologie (UBIT){{< /todo >}}
 
 Applicable regulations
 : Gewerbeordnung (GewO), available at [www.ris.bka.gv.at](https://www.ris.bka.gv.at)
