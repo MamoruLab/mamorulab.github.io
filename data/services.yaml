@@ -1,0 +1,27 @@
+# "What we do" cards on the homepage, in this order. Research comes last: it is the base every other service
+# stands on.
+# span: the card's width in the grid (4 columns on phones, 12 from md up), as Tailwind classes.
+- title: Customized Solutions
+  description: Tell us what you're building. We'll show you how to protect it.
+  details: We build cryptographic solutions designed to meet specific enterprise requirements, balancing security with performance.
+  span: col-span-4 md:col-span-6 lg:col-span-7
+
+- title: Industrial Cryptography
+  description: Cryptography for IoT and constrained devices, where memory, power and cost are primary concern.
+  details: From sensors and micro-controllers to industrial controllers, these devices need cryptography that fits their memory, power and cost budget and stays secure for the device's whole lifetime.
+  span: col-span-4 md:col-span-6 lg:col-span-5
+
+- title: IP & Patents
+  description: Protecting novel innovations with robust intellectual property strategies.
+  details: We help organizations navigate the complex landscape of cryptographic intellectual property. Our experts assist in prior art search, patent drafting, and defensive publication strategies to secure your innovations.
+  span: col-span-4 md:col-span-6 lg:col-span-5
+
+- title: Research
+  description: "All our services are built on a strong and published research base: don't hide your crypto, but only the key."
+  details: We strongly recommend cryptographic solutions subjected to open scrutiny. Our research covers privacy-enabling cryptography, techniques that will define the next decade of privacy tech.
+  span: col-span-4 md:col-span-6 lg:col-span-7
+
+- title: Audit and Security Review
+  description: Comprehensive evaluation of cryptographic systems to ensure security and compliance.
+  details: We conduct audits and security reviews of cryptographic protocols and implementations, identifying vulnerabilities and providing recommendations to enhance security posture.
+  span: col-span-4 md:col-span-6 lg:col-span-7

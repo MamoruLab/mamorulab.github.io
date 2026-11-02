@@ -1,0 +1,89 @@
+{{- /*
+  Brand pattern: the lattice L = { i·b1 + j·b2 } with b1 = (g, 0) and b2 = (0.38·g, 0.86·g),
+  a reference to lattice-based post-quantum cryptography. See brand/pattern/.
+
+  Params:
+    class
+    corner    "top-left" | "top-right" | "bottom-left" | "bottom-right" (default "top-right")
+    radius    fade radius around the corner, as a share of the box's normalised diagonal (default "60%")
+    spacing   lattice spacing g in px (default 36)
+    basis     lattice indices [i, j] of the one point that shows its basis vectors, counted from the corner
+    noBasis   true for no basis vectors
+    clearTop  height in px at the top that stays clear, e.g. under the transparent header (default 0)
+    trail     true: edges form between the points the mouse passes over, then fade; without a mouse, a slow path
+              draws them (assets/js/lattice-trail.js)
+*/ -}}
+{{- $dot := "#5E636C" -}}
+{{- $accent := "#0AFF58" -}}
+{{- $skew := 23.8387 -}}{{/* angle of b2 from the vertical, in degrees: atan(0.38 / 0.86) */}}
+{{- $extent := 8000 -}}{{/* covers the box from whichever corner the lattice starts */}}
+
+{{- $corner := .corner | default "top-right" -}}
+{{- $radius := .radius | default "60%" -}}
+{{- $g := float (.spacing | default 36) -}}
+{{- $clearTop := .clearTop | default 0 -}}
+{{- $h := mul 0.86 $g -}}
+{{- $right := strings.HasSuffix $corner "right" -}}
+{{- $bottom := strings.HasPrefix $corner "bottom" -}}
+
+{{- /* SVG ids must be unique within the page */ -}}
+{{- $n := add (page.Store.Get "lattices" | default 0) 1 -}}
+{{- page.Store.Set "lattices" $n -}}
+{{- $id := printf "lattice-%d" $n -}}
+
+{{- $i := cond $right -7 2 -}}
+{{- $j := cond $bottom -4 5 -}}
+{{- with .basis }}{{ $i = index . 0 }}{{ $j = index . 1 }}{{ end -}}
+
+{{- /* The dot sits in the middle of the pattern tile, so the first lattice point is at (0.69·g, 0.43·g) */ -}}
+{{- $ox := add (add (mul 0.69 $g) (mul $i $g)) (mul (mul 0.38 $j) $g) -}}
+{{- $oy := add (mul 0.43 $g) (mul $j $h) -}}
+{{- $b1x := add $ox $g -}}
+{{- $b2x := add $ox (mul 0.38 $g) -}}
+{{- $b2y := add $oy $h -}}
+
+{{- /* opacity = (1 − d/R)^1.2, measured from the corner, at d/R = 0, 0.1, …, 1 */ -}}
+{{- $fade := slice 1 0.881 0.765 0.652 0.542 0.435 0.333 0.236 0.145 0.063 0 -}}
+
+{{- $dots := printf `<svg x="%s" y="%s" overflow="visible"><rect x="%d" y="%d" width="%d" height="%d" fill="url(#%s-dots)" mask="url(#%s-fade)"/>`
+  (cond $right "100%" "0") (cond $bottom "100%" "0") (mul -1 $extent) (mul -1 $extent) (mul 2 $extent) (mul 2 $extent) $id $id -}}
+{{- if .trail -}}
+  {{- $dots = printf `%s<g data-lattice-trail data-spacing="%v" data-right="%t" data-bottom="%t" data-radius="%s" data-clear-top="%v" mask="url(#%s-fade)" stroke="%s" stroke-width="1" stroke-linecap="round" fill="none"></g>`
+    $dots $g $right $bottom $radius $clearTop $id $dot -}}
+{{- end -}}
+{{- if not .noBasis -}}
+  {{- $dots = printf `%s<g stroke="%s" stroke-width="1.5" stroke-linecap="round" fill="%s"><line x1="%.2f" y1="%.2f" x2="%.2f" y2="%.2f"/><line x1="%.2f" y1="%.2f" x2="%.2f" y2="%.2f"/><circle cx="%.2f" cy="%.2f" r="2.5" stroke="none"/><circle cx="%.2f" cy="%.2f" r="2.5" stroke="none"/><circle cx="%.2f" cy="%.2f" r="3.75" stroke="none"/></g>`
+    $dots $accent $accent $ox $oy $b1x $oy $ox $oy $b2x $b2y $b1x $oy $b2x $b2y $ox $oy -}}
+{{- end -}}
+{{- $dots = printf "%s</svg>" $dots -}}
+
+<svg aria-hidden="true" focusable="false" width="100%" height="100%" class="pointer-events-none select-none {{ .class }}">
+  <defs>
+    <pattern id="{{ $id }}-dots" patternUnits="userSpaceOnUse" width="{{ $g }}" height="{{ printf "%.2f" $h }}" patternTransform="skewX({{ $skew }})">
+      {{- /* Undo the skew locally so the dots stay round */}}
+      <circle r="2" fill="{{ $dot }}" transform="translate({{ div $g 2 }} {{ printf "%.2f" (div $h 2) }}) skewX({{ mul -1 $skew }})"/>
+    </pattern>
+    <radialGradient id="{{ $id }}-fade-gradient" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="{{ $radius }}">
+      {{- range $k, $opacity := $fade }}
+      <stop offset="{{ div (float $k) 10 }}" stop-color="#fff" stop-opacity="{{ $opacity }}"/>
+      {{- end }}
+    </radialGradient>
+    <mask id="{{ $id }}-fade" maskUnits="userSpaceOnUse" x="{{ mul -1 $extent }}" y="{{ mul -1 $extent }}" width="{{ mul 2 $extent }}" height="{{ mul 2 $extent }}">
+      <rect x="{{ mul -1 $extent }}" y="{{ mul -1 $extent }}" width="{{ mul 2 $extent }}" height="{{ mul 2 $extent }}" fill="url(#{{ $id }}-fade-gradient)"/>
+    </mask>
+    {{- if gt $clearTop 0 }}
+    <linearGradient id="{{ $id }}-clear-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="{{ mul $clearTop 0.5 }}" x2="0" y2="{{ mul $clearTop 1.5 }}">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="1"/>
+    </linearGradient>
+    <mask id="{{ $id }}-clear" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+      <rect width="100%" height="100%" fill="url(#{{ $id }}-clear-gradient)"/>
+    </mask>
+    {{- end }}
+  </defs>
+  {{- if gt $clearTop 0 }}
+  <g mask="url(#{{ $id }}-clear)">{{ $dots | safeHTML }}</g>
+  {{- else }}
+  {{ $dots | safeHTML }}
+  {{- end }}
+</svg>

@@ -1,0 +1,35 @@
+<section class="py-32 md:py-48 h-screen flex items-center justify-center overflow-hidden relative">
+  <div data-reveal="fade" class="absolute inset-0 flex items-center justify-center select-none pointer-events-none mix-blend-exclusion" aria-hidden="true">
+    <span class="text-9xl font-black transform scale-150 md:scale-320 lg:scale-500 opacity-5">守る</span>
+  </div>
+
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid grid-cols-4 md:grid-cols-12 gap-4">
+      <div class="col-span-4 md:col-start-3 md:col-span-8">
+        <div data-words>
+          <h2 class="text-4xl md:text-6xl lg:text-7xl font-clash font-medium leading-tight text-white mb-4 text-center md:text-left">
+            {{- partial "words.html" (dict "text" "Mamoru means to protect.") -}}
+          </h2>
+        </div>
+
+        <div data-words class="flex flex-col md:gap-4 gap-2 text-lg md:text-xl lg:text-2xl max-w-3xl text-center md:text-left md:px-0 px-12">
+          <p>
+            {{- partial "words.html" (dict "text" "In Japanese,") -}}
+            {{- partial "words.html" (dict "text" "守る" "class" "font-bold") -}}
+            {{- partial "words.html" (dict "text" "means to") -}}
+            {{- partial "words.html" (dict "text" "guard what matters." "class" "font-bold") -}}
+          </p>
+          <p>
+            {{- partial "words.html" (dict "text" "Not after it breaks.") -}}
+          </p>
+          <p>
+            {{- partial "words.html" (dict "text" "Not when it is convenient.") -}}
+          </p>
+          <p>
+            {{- partial "words.html" (dict "text" "That is how we build security.") -}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

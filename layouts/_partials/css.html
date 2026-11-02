@@ -1,0 +1,10 @@
+{{- /* The stylesheet is generated with Tailwind CSS from tailwind/main.css (see README.md); Hugo only publishes it */ -}}
+{{- with resources.Get "css/main.css" }}
+  {{- if hugo.IsDevelopment }}
+<link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- else }}
+    {{- with . | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+  {{- end }}
+{{- end }}

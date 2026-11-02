@@ -1,0 +1,76 @@
+{{- /* Fixed header. assets/js/header.js hides it on scroll down and runs the menu overlay on small screens. */ -}}
+{{- $page := . -}}
+{{- $home := relURL "" -}}
+<header id="site-header" class="site-header w-full px-6 md:px-12 flex items-center justify-between z-50 fixed top-0 text-white border-b py-6 bg-transparent border-transparent data-scrolled:py-3 data-scrolled:bg-background/90 data-scrolled:border-foreground/5">
+  <a href="{{ $home }}" class="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"{{ if .IsHome }} aria-current="page"{{ end }}>
+    {{- partial "logo.html" (dict "small" true "priority" true "class" "w-45 md:w-50") -}}
+  </a>
+
+  <nav aria-label="Main" class="hidden lg:block">
+    <ul class="flex items-center gap-10">
+      {{- range site.Params.nav }}
+        {{- $href := relURL .path }}
+        {{- $current := eq $page.RelPermalink $href }}
+      <li>
+        {{- partial "text-link.html" (dict
+          "href" $href
+          "text" .label
+          "current" $current
+          "class" (printf "uppercase font-medium text-sm tracking-wide transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 %s" (cond $current "text-white" "text-foreground hover:text-white"))
+        ) }}
+      </li>
+      {{- end }}
+    </ul>
+  </nav>
+
+  <button type="button" id="menu-button" class="menu-button group/menu lg:hidden flex items-center cursor-pointer select-none rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50" aria-expanded="false" aria-controls="site-menu">
+    {{- /* On the narrowest phones the word is read but not shown, so the logo keeps its minimum width */}}
+    <span class="relative flex flex-col items-center justify-center max-[22.5rem]:sr-only">
+      <span class="block uppercase font-medium text-sm transition-[translate,opacity] duration-500 ease-out-quint group-aria-expanded/menu:-translate-y-5 group-aria-expanded/menu:opacity-0 motion-reduce:translate-y-0!" data-menu-label="closed">Menu</span>
+      <span class="block uppercase font-medium text-sm absolute translate-y-5 opacity-0 transition-[translate,opacity] duration-500 ease-out-quint group-aria-expanded/menu:translate-y-0 group-aria-expanded/menu:opacity-100 motion-reduce:translate-y-0!" data-menu-label="open" aria-hidden="true">Close</span>
+    </span>
+
+    <span class="ml-4 size-12 relative flex items-center justify-center" aria-hidden="true">
+      <svg viewBox="0 0 48 48" class="absolute inset-0" fill="currentColor" stroke="currentColor" stroke-linecap="round">
+        <circle class="menu-centre" cx="24" cy="24" r="1.5" stroke="none"/>
+        <line class="menu-arm" x1="24" y1="24" x2="17.5" y2="17.5"/>
+        <line class="menu-arm" x1="24" y1="24" x2="17.5" y2="30.5"/>
+        <line class="menu-arm" x1="24" y1="24" x2="30.5" y2="30.5"/>
+        <line class="menu-arm" x1="24" y1="24" x2="30.5" y2="17.5"/>
+      </svg>
+      <svg viewBox="0 0 48 48" class="absolute inset-0 text-foreground/15" fill="none" stroke="currentColor" stroke-width="1">
+        <circle class="menu-ring" cx="24" cy="24" r="22"/>
+        <circle class="menu-ring" cx="24" cy="24" r="22" transform="rotate(180 24 24)"/>
+      </svg>
+      <svg viewBox="0 0 48 48" class="absolute inset-0" fill="currentColor">
+        <circle class="menu-dot" cx="24" cy="18" r="1.75"/>
+        <g transform="rotate(180 24 24)"><circle class="menu-dot" cx="24" cy="18" r="1.75"/></g>
+      </svg>
+    </span>
+  </button>
+</header>
+
+<div id="site-menu" class="group/overlay fixed inset-0 bg-background z-40 flex flex-col items-center justify-center invisible opacity-0 transition-[opacity,visibility] duration-250 ease-in-out data-open:visible data-open:opacity-100" inert>
+  <nav aria-label="Main" class="w-full max-w-4xl px-4 flex flex-col gap-y-4 md:gap-y-8">
+    {{- range $index, $link := site.Params.nav }}
+      {{- $href := relURL .path }}
+      {{- $current := eq $page.RelPermalink $href }}
+    <a href="{{ $href }}"{{ if $current }} aria-current="page"{{ end }} class="group/link font-clash text-5xl md:text-7xl font-medium relative overflow-hidden max-w-min cursor-pointer text-white" data-menu-link>
+      <span class="flex items-center gap-x-4 translate-y-[75px] opacity-0 transition-[translate,opacity] duration-500 ease-in-out group-data-open/overlay:translate-y-0 group-data-open/overlay:opacity-100 group-data-open/overlay:ease-[cubic-bezier(0,.6,0,1)] motion-reduce:translate-y-0! {{ index (slice "group-data-open/overlay:delay-300" "group-data-open/overlay:delay-400" "group-data-open/overlay:delay-500" "group-data-open/overlay:delay-600") (mod $index 4) }}">
+        <span class="border-y-2 border-foreground my-auto inline-block transition-[width] duration-200 delay-25 ease-out-quint {{ if $current }}w-12{{ else }}w-0 group-hover/link:w-6{{ end }}"></span>
+        {{- .label -}}
+      </span>
+    </a>
+    {{- end }}
+  </nav>
+
+  <div class="absolute inset-x-0 bottom-0 py-6 px-12 hidden md:flex justify-between items-center">
+    <p class="text-xs uppercase tracking-widest">
+      Cryptography for systems that matter.
+    </p>
+
+    <p class="text-xs font-extralight mt-1 text-foreground/75">
+      &copy; <span data-year>{{ now.Year }}</span> Mamoru Lab GmbH. All rights reserved.
+    </p>
+  </div>
+</div>

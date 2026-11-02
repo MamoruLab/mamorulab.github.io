@@ -1,0 +1,10 @@
+{{- /*
+  Text link whose letters roll on hover.
+  Params: href, text, class, current (bool, sets aria-current="page"), duration, delay
+*/ -}}
+<a href="{{ .href }}" aria-label="{{ .text }}"{{ if .current }} aria-current="page"{{ end }}
+  class="group/casino relative inline-block overflow-hidden decoration-none align-middle {{ .class }}">
+  <span class="col-start-1 row-start-1 flex">
+    <span>{{- partial "casino.html" (dict "text" .text "duration" .duration "delay" .delay) -}}</span>
+  </span>
+</a>

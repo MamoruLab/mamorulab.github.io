@@ -1,0 +1,37 @@
+<section class="relative md:py-32 py-20 overflow-hidden">
+  <div data-reveal class="container mx-auto px-4 md:px-8">
+    <div class="grid grid-cols-4 md:grid-cols-12 gap-4">
+      <div class="col-span-4 md:col-start-3 md:col-span-8">
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-clash font-medium leading-tight text-white mb-4 text-center md:text-left">
+          This space is intentionally empty.
+        </h2>
+        <p class="md:text-xl lg:text-2xl max-w-3xl text-center md:text-left px-12 md:px-0">
+          We do not fill this space lightly.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {{- /* Placeholder cards, shown dimmed from sm up as decoration */}}
+  <div data-reveal data-reveal-delay="0.1" class="hidden sm:block mt-12 md:mt-16 md:px-12 px-6">
+    <div aria-hidden="true" class="grid grid-cols-3 gap-6 lg:gap-16 opacity-40">
+      {{- range slice "Reserved" "Future collaboration" "Aligned partner" }}
+      <div class="relative flex flex-col items-center">
+        <div class="group relative flex h-75 w-full md:h-100 flex-col gap-y-2 overflow-hidden border border-secondary bg-container p-6 md:p-8 transition-colors z-10 rounded-md">
+          <span class="text-5xl font-bold absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-center rotate-45 rounded-md bg-container px-4 py-3 text-white select-none pointer-events-none border border-secondary">
+            {{ . }}
+          </span>
+          <span class="h-10 rounded-md bg-secondary/75 mb-auto"></span>
+
+          <span class="h-5 rounded-md bg-secondary/75"></span>
+          <span class="h-5 rounded-md bg-secondary/75"></span>
+          <span class="h-5 rounded-md bg-secondary/75"></span>
+          <span class="h-5 rounded-md bg-secondary/75"></span>
+          <span class="h-5 rounded-md bg-secondary/75"></span>
+          <span class="h-5 rounded-md bg-secondary/75 w-3/4"></span>
+        </div>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+</section>

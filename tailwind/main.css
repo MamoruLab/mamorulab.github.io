@@ -1,0 +1,335 @@
+/*! Generated from tailwind/main.css: edit that file and regenerate (README.md, "Changing the styles") */
+
+/*
+ * Source of the site's stylesheet. Tailwind CSS turns it, and the classes it finds in the files listed below, into
+ * assets/css/main.css, which Hugo publishes. Regenerate after changing this file or using a class that isn't in
+ * the site yet:
+ *
+ *   tailwindcss -i tailwind/main.css -o assets/css/main.css --minify
+ */
+@import "tailwindcss" source(none);
+
+/* Where the classes are used */
+@source "../layouts";
+@source "../content";
+@source "../data";
+@source "../assets/js";
+
+/* Self-hosted fonts: no request goes to a third-party font service */
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("../fonts/ClashDisplay-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../fonts/Satoshi-Variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../fonts/Satoshi-VariableItalic.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --color-background: #121417;
+  --color-foreground: #d2d6db;
+  --color-container: #1b1c22;
+  --color-primary: #0aff58;
+  --color-secondary: #24272d;
+  --font-clash: "ClashDisplay", ui-sans-serif, system-ui, sans-serif;
+  --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer utilities {
+  .h-screen {
+    height: 100svh;
+  }
+
+  .min-h-screen {
+    min-height: 100svh;
+  }
+}
+
+@layer base {
+  .h-screen {
+    height: 100vh;
+  }
+
+  .min-h-screen {
+    min-height: 100vh;
+  }
+}
+
+/* Page transitions between pages of the site, in browsers that support them */
+@keyframes move-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes move-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.5s;
+}
+
+::view-transition-old(root) {
+  animation: 0.4s cubic-bezier(0.22, 1, 0.36, 1) both move-out;
+}
+
+::view-transition-new(root) {
+  animation: 0.4s cubic-bezier(0.22, 1, 0.36, 1) both move-in;
+}
+
+html {
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+  /* keeps in-page anchors clear of the fixed header */
+  scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-container);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/*
+ * Motion. Visitors who ask for reduced motion get fades instead of movement across the whole site.
+ */
+
+/* Entrance on page load: a rise with a fade (rise) or a fade alone (appear). Stagger with [animation-delay:…],
+   which is why these use the longhand properties. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 50px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@utility rise {
+  animation-name: rise;
+  animation-duration: 0.8s;
+  animation-timing-function: var(--ease-out-quint);
+  animation-fill-mode: both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: fade-in;
+  }
+}
+
+@utility appear {
+  animation-name: fade-in;
+  animation-duration: 0.8s;
+  animation-timing-function: var(--ease-out-quint);
+  animation-fill-mode: both;
+}
+
+/* The site's one scroll entrance (data-reveal): a short fade with a small rise, played once when the element
+   scrolls into view. The hidden state needs the script, so without it everything is simply shown. */
+[data-reveal] {
+  transition:
+    opacity 0.6s var(--ease-out-quint),
+    translate 0.6s var(--ease-out-quint);
+}
+
+[data-reveal="fade"] {
+  transition: opacity 1.2s ease-out;
+}
+
+@media (scripting: enabled) {
+  [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    translate: 0 16px;
+  }
+
+  [data-reveal="fade"]:not([data-revealed]) {
+    translate: none;
+  }
+
+  /* Word by word (data-words): each word rises from behind its own line */
+  [data-words]:not([data-revealed]) [data-word] {
+    translate: 0 100%;
+  }
+}
+
+[data-word] {
+  transition: translate 0.5s var(--ease-out-quint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal]:not([data-revealed]),
+  [data-words]:not([data-revealed]) [data-word] {
+    translate: none;
+  }
+}
+
+/* Letters that roll on hover (the "casino" text of buttons and links). Each letter carries a copy of itself
+   1.5em below (its text shadow), which rolls into place. The per-letter delays are set by the script. */
+.casino-char {
+  text-shadow: 0 1.5em currentColor;
+  transition: translate 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .group\/casino:hover .casino-char {
+    translate: 0 -1.5em;
+  }
+}
+
+/* Header: hides when scrolling down, comes back when scrolling up */
+.site-header {
+  transition:
+    padding 0.3s,
+    background-color 0.3s,
+    border-color 0.3s,
+    translate 0.6s var(--ease-out-quint),
+    opacity 0.6s var(--ease-out-quint);
+}
+
+.site-header[data-hidden] {
+  translate: 0 -100%;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fade only; the header moves out of the way once it is invisible */
+  .site-header {
+    transition-duration: 0.3s, 0.3s, 0.3s, 0s, 0.6s;
+  }
+
+  .site-header[data-hidden] {
+    transition-delay: 0s, 0s, 0s, 0.6s, 0s;
+  }
+}
+
+/* Menu button: a ring with three dots that turns into a cross */
+.menu-ring {
+  stroke-dasharray: 69.5 276.5;
+  stroke-dashoffset: -35;
+  transition:
+    stroke-dasharray 1s var(--ease-out-quint),
+    stroke-dashoffset 1s var(--ease-out-quint);
+}
+
+.menu-dot {
+  transition:
+    translate 0.5s var(--ease-out-quint),
+    opacity 0.5s var(--ease-out-quint);
+}
+
+.menu-centre {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: scale 0.5s var(--ease-out-quint);
+}
+
+.menu-arm {
+  stroke-dasharray: 9.2;
+  stroke-dashoffset: 9.2;
+  transition: stroke-dashoffset 0.5s var(--ease-out-quint);
+}
+
+.menu-arm:nth-child(3) {
+  transition-delay: 0.1s;
+}
+
+.menu-arm:nth-child(4) {
+  transition-delay: 0.2s;
+}
+
+.menu-arm:nth-child(5) {
+  transition-delay: 0.3s;
+}
+
+@media (hover: hover) {
+  .menu-button:hover:not([aria-expanded="true"]) .menu-ring {
+    stroke-dasharray: 52.5 276.5;
+    stroke-dashoffset: -43;
+  }
+
+  .menu-button:hover:not([aria-expanded="true"]) .menu-dot {
+    translate: 0 -16px;
+  }
+}
+
+.menu-button[aria-expanded="true"] .menu-ring {
+  stroke-dasharray: 0 276.5;
+  stroke-dashoffset: -104;
+}
+
+.menu-button[aria-expanded="true"] .menu-dot {
+  translate: 0 -16px;
+  opacity: 0;
+  transition-delay: 0.5s;
+}
+
+.menu-button[aria-expanded="true"] .menu-centre {
+  scale: 0.5;
+}
+
+.menu-button[aria-expanded="true"] .menu-arm {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-dot {
+    transition-property: opacity;
+  }
+}

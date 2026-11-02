@@ -1,0 +1,43 @@
+{{- /*
+  GitHub Pages can't send custom response headers, so the policies that also work as <meta> tags are set here.
+  The CSP is enforced: every script and stylesheet is a same-origin file, and no page uses inline scripts or
+  style attributes (the scripts change styles through the CSSOM, which the CSP allows).
+  Not possible in a <meta> tag: frame-ancestors / X-Frame-Options, X-Content-Type-Options, Permissions-Policy,
+  Cross-Origin-Opener-Policy. See README.md.
+*/ -}}
+{{- $csp := slice
+  "default-src 'self'"
+  "script-src 'self'"
+  "style-src 'self'"
+  "img-src 'self' data:"
+  "font-src 'self'"
+  (printf "connect-src 'self'%s" (cond hugo.IsDevelopment " ws:" ""))
+  "frame-src 'none'"
+  "object-src 'none'"
+  "base-uri 'self'"
+  "form-action 'none'"
+-}}
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="{{ delimit $csp "; " }}">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ .Description | default site.Params.description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta name="theme-color" content="#121417">
+
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="32x32">
+<link rel="icon" href="{{ "icon.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
+<link rel="preload" href="{{ "fonts/Satoshi-Variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/ClashDisplay-Variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+
+{{ partial "css.html" . }}
+
+{{- with resources.Get "js/main.js" }}
+  {{- $opts := dict "minify" (not hugo.IsDevelopment) "target" "es2020" }}
+  {{- with . | js.Build $opts | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{- end }}
+{{- end }}

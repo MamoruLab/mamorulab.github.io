@@ -1,0 +1,15 @@
+{{- /*
+  Primary button whose letters roll on hover. With href it renders a link styled as a button, otherwise a <button>.
+  Params: label, href, type (for <button>, default "button"), class
+*/ -}}
+{{- $classes := "group/casino relative px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 transition-all overflow-hidden cursor-pointer inline-flex items-center justify-center bg-primary text-black hover:bg-primary/80 focus:ring-primary/50" -}}
+{{- $content := partial "casino.html" (dict "text" .label) -}}
+{{- if .href -}}
+<a href="{{ .href }}" class="{{ $classes }} {{ .class }}" aria-label="{{ .label }}">
+  <span class="relative z-10 flex items-center justify-center">{{ $content }}</span>
+</a>
+{{- else -}}
+<button type="{{ .type | default "button" }}" class="{{ $classes }} {{ .class }}" aria-label="{{ .label }}">
+  <span class="relative z-10 flex items-center justify-center">{{ $content }}</span>
+</button>
+{{- end -}}

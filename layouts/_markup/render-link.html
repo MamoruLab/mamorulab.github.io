@@ -1,0 +1,12 @@
+{{- /*
+  Links in Markdown content. Site paths ("/privacy/") are resolved against baseURL, so they keep working when the
+  site is served from a sub-path (https://<user>.github.io/<repository>/). Web links to other sites open in a new tab.
+*/ -}}
+{{- $url := urls.Parse .Destination -}}
+{{- $href := .Destination -}}
+{{- $external := and $url.IsAbs (in (slice "http" "https") $url.Scheme) -}}
+{{- if and (not $url.IsAbs) (hasPrefix .Destination "/") (not (hasPrefix .Destination "//")) -}}
+  {{- $href = relURL (strings.TrimPrefix "/" .Destination) -}}
+{{- end -}}
+<a href="{{ $href }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text }}</a>
+{{- /**/ -}}

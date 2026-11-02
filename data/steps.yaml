@@ -1,0 +1,16 @@
+# "How we work" cards on the homepage, in this order
+- number: "01"
+  title: Problem Definition & Analysis
+  description: We listen, we understand, we analyze your problem and identify solutions.
+
+- number: "02"
+  title: Design
+  description: We design standard compliant cryptographic solutions that balance theoretical soundness with practical constraints.
+
+- number: "03"
+  title: Implementation & PoC
+  description: We build prototypes with rigorous testing and formal verification.
+
+- number: "04"
+  title: Audit & Handoff
+  description: Comprehensive security review and knowledge transfer.

@@ -1,0 +1,11 @@
+{{ define "main" }}
+<main class="min-h-screen">
+  {{ partial "sections/home/hero.html" . }}
+  <div class="md:mt-48 mt-16"></div>
+  {{ partial "sections/home/what-we-do.html" . }}
+  {{ partial "sections/home/how-we-work.html" . }}
+  {{ partial "sections/home/philosophy.html" . }}
+  {{ partial "sections/home/about.html" . }}
+  {{ partial "sections/cta.html" (dict "title" (slice "Let's protect" "what matters.")) }}
+</main>
+{{ end }}

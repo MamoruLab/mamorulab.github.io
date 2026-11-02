@@ -1,0 +1,11 @@
+{{ define "main" }}
+<main class="min-h-screen">
+  {{ partial "sections/partners/hero.html" . }}
+  {{ partial "sections/partners/independent.html" . }}
+  {{ partial "sections/partners/empty.html" . }}
+  {{ partial "sections/cta.html" (dict
+    "title" (slice "Propose a collaboration")
+    "text" "We collaborate with teams building systems where failure is not an option."
+  ) }}
+</main>
+{{ end }}

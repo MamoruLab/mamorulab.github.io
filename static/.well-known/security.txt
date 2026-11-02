@@ -1,0 +1,11 @@
+# Mamoru Lab GmbH - security contact (RFC 9116)
+#
+# If you believe you have found a security vulnerability in any Mamoru Lab
+# system or publication, please report it by email. Include a description,
+# the affected URL or component, and steps to reproduce.
+# Please do not include sensitive personal data in your report.
+
+Contact: mailto:info@mamorulab.com
+Expires: 2027-10-01T00:00:00.000Z
+Preferred-Languages: en, de, it
+Canonical: https://mamorulab.com/.well-known/security.txt

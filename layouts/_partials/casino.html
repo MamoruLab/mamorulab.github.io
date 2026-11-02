@@ -1,0 +1,11 @@
+{{- /*
+  Text split into letters that roll on hover (see .casino-char in main.css). The parent carries the real text in
+  aria-label, so screen readers don't spell it out letter by letter.
+  The hover is detected on the closest .group/casino ancestor.
+  Params: text, duration (s, default 0.2), delay (s between letters, default 0.01)
+*/ -}}
+<span class="relative inline-flex overflow-hidden h-[1.5em] items-center" aria-hidden="true" data-casino="{{ .delay | default 0.01 }}" data-casino-duration="{{ .duration | default 0.2 }}">
+  {{- range split .text "" -}}
+    <span class="casino-char inline-block whitespace-pre">{{ . }}</span>
+  {{- end -}}
+</span>

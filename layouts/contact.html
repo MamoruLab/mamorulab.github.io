@@ -1,0 +1,61 @@
+{{- /* The contact page: the email address, centred. The copy button is shown by assets/js/copy-email.js. */ -}}
+{{ define "main" }}
+{{- $email := site.Params.email }}
+<main class="flex-1 flex flex-col justify-center pt-28 md:pt-32 pb-6 md:pb-12">
+  <section class="relative mx-6 md:mx-12 overflow-hidden rounded-md border border-foreground/10 px-6 md:px-12 py-16 md:py-20 text-center">
+    {{- /* Only from md up: on phones the text fills the box and the pattern would sit behind it */}}
+    <div class="absolute inset-0 z-0 hidden md:block">
+      {{ partial "lattice.html" (dict "corner" "top-right" "radius" "26%" "basis" (slice -2 1)) }}
+    </div>
+
+    <div class="relative z-10 mx-auto flex max-w-3xl flex-col items-center">
+      <div data-reveal>
+        <p class="text-xs md:text-sm font-medium uppercase tracking-[0.2em] text-primary">
+          Contact
+        </p>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.08">
+        <h1 class="mt-4 md:mt-6 max-[21.25rem]:text-[1.75rem] max-[23.75rem]:text-[2rem] text-4xl md:text-6xl lg:text-7xl font-clash font-medium tracking-tighter text-white text-balance">
+          Tell us what you're protecting.
+        </h1>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.16">
+        <p class="mt-6 max-w-2xl text-base md:text-xl lg:text-2xl leading-relaxed text-foreground text-pretty">
+          Whether you are designing a protocol, securing constrained devices or need an independent review,
+          write to us. A few lines about your project are enough to start.
+        </p>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.24" class="mt-10 md:mt-12 flex flex-col items-center gap-5">
+        <a href="mailto:{{ $email }}" class="rounded-sm font-clash font-medium tracking-tight text-white text-xl min-[23.75rem]:text-2xl sm:text-4xl md:text-5xl lg:text-6xl underline decoration-primary decoration-2 md:decoration-3 underline-offset-[0.2em] transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+          {{- $email -}}
+        </a>
+
+        {{- /* Both labels share one cell, so the button keeps its width when the label changes */}}
+        <button type="button" data-copy="{{ $email }}" hidden class="group/copy inline-flex items-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm md:text-base font-medium text-foreground transition-colors hover:bg-secondary/80 hover:text-white cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+          <span class="grid" aria-hidden="true">
+            {{- partial "icon.html" (dict "name" "document-duplicate" "class" "col-start-1 row-start-1 size-4 group-data-copied/copy:invisible") -}}
+            {{- partial "icon.html" (dict "name" "check" "class" "col-start-1 row-start-1 size-4 text-primary invisible group-data-copied/copy:visible") -}}
+          </span>
+          <span class="grid">
+            <span class="col-start-1 row-start-1 group-data-copied/copy:invisible">Copy address</span>
+            <span class="col-start-1 row-start-1 invisible group-data-copied/copy:visible">Copied</span>
+          </span>
+        </button>
+        <span role="status" class="sr-only" data-copy-status></span>
+      </div>
+
+      <div data-reveal data-reveal-delay="0.32">
+        <p class="mt-12 md:mt-14 text-sm md:text-base text-foreground/60">
+          Reporting a security vulnerability? Please see our
+          <a href="{{ ".well-known/security.txt" | relURL }}" class="text-white underline decoration-primary underline-offset-3 hover:text-primary">security.txt</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+{{ partial "footer.html" (dict "class" "mt-auto") }}
+{{ end }}

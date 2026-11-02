@@ -1,0 +1,16 @@
+{{- /*
+  The designer's outlined artwork: never retype the logo in a font.
+  Below ~300 px wide the light "lab" thins to a hairline, so small renderings use the Regular-weight "lab".
+  Params: small (bool), priority (bool, for the logo in the first screen), class
+*/ -}}
+{{- $file := "mamoru-lab_A_horizontal_green-keyhole_white.svg" -}}
+{{- $width := 1069 -}}
+{{- if .small -}}
+  {{- $file = "mamoru-lab_A_horizontal_green-keyhole_white_lab-regular.svg" -}}
+  {{- $width = 1076 -}}
+{{- end -}}
+{{- with resources.Get (printf "brand/logo/%s" $file) -}}
+<img src="{{ .RelPermalink }}" alt="Mamoru Lab" width="{{ $width }}" height="104" draggable="false"
+  {{- if $.priority }} fetchpriority="high"{{ else }} loading="lazy"{{ end }}
+  class="h-auto select-none {{ $.class }}">
+{{- end -}}

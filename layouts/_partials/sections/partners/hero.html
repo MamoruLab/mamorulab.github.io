@@ -1,0 +1,25 @@
+{{- /* Soft green blobs drift behind the title; assets/js/blobs.js places and moves them */ -}}
+{{- $colors := slice "bg-green-800" "bg-lime-500" "bg-lime-900" "bg-emerald-900" "bg-teal-950" -}}
+<section class="h-svh relative flex overflow-hidden">
+  <div data-blobs hidden>
+    {{- range $index := seq 0 9 }}
+    <div data-blob data-blob-column="{{ mod $index (len $colors) }}" data-blob-columns="{{ len $colors }}" class="absolute rounded-full mix-blend-screen blur-[80px] {{ index $colors (mod $index (len $colors)) }}"></div>
+    {{- end }}
+  </div>
+
+  <div class="m-auto">
+    <h1 class="text-4xl md:text-6xl lg:text-8xl font-clash font-medium tracking-tighter text-white text-center">
+      <span class="block overflow-hidden px-2">
+        <span class="block rise [animation-delay:200ms]">Partners</span>
+      </span>
+    </h1>
+
+    <p class="text-base md:text-xl lg:text-2xl text-foreground max-w-2xl leading-normal block overflow-hidden mt-2">
+      <span class="block overflow-hidden">
+        <span class="block rise [animation-delay:300ms]">
+          Partnerships start with alignment, not logos.
+        </span>
+      </span>
+    </p>
+  </div>
+</section>

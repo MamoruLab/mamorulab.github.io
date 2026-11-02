@@ -1,0 +1,14 @@
+{{ define "main" }}
+<main class="flex-1 flex items-center justify-center px-6 pt-32 pb-20">
+  <div class="text-center">
+    <p class="rise [animation-delay:200ms] text-xs md:text-sm font-medium uppercase tracking-[0.2em] text-primary mb-4">Error 404</p>
+    <h1 class="rise [animation-delay:300ms] text-4xl md:text-6xl font-clash font-medium tracking-tighter text-white">Page not found</h1>
+    <p class="rise [animation-delay:400ms] mt-4 text-base md:text-xl">The page you are looking for does not exist or has moved.</p>
+    <div class="rise [animation-delay:500ms] mt-8">
+      {{ partial "button.html" (dict "href" (relURL "") "label" "Back to the homepage" "class" "text-lg px-6") }}
+    </div>
+  </div>
+</main>
+
+{{ partial "footer.html" (dict "class" "mt-auto") }}
+{{ end }}

@@ -1,0 +1,54 @@
+# Local builds use the target domain. The GitHub Actions workflow overrides baseURL with the address GitHub Pages
+# publishes to, so the site also works under https://<user>.github.io/<repository>/.
+baseURL = 'https://mamorulab.com/'
+locale = 'en'
+title = 'Mamoru Lab'
+
+disableKinds = ['taxonomy', 'term', 'rss']
+enableRobotsTXT = true
+# No <meta name="generator">: the pages don't advertise the tool and version that built them
+disableHugoGeneratorInject = true
+
+[params]
+  description = 'Applied cryptography. Designed for the real world.'
+  email = 'info@mamorulab.com'
+
+  # Main navigation. Paths are relative to the site root, so they also work under a sub-path on GitHub Pages.
+  # Partners stays reachable at /partners/ but is not linked until there is a partner to show.
+  [[params.nav]]
+    label = 'About'
+    path = '#about'
+  [[params.nav]]
+    label = 'Services'
+    path = '#services'
+  [[params.nav]]
+    label = 'Contact'
+    path = 'contact/'
+
+  # Footer profiles. An entry without a URL is not shown: add the URL once the profile exists.
+  [[params.socials]]
+    label = 'Mamoru Lab on X'
+    icon = 'x'
+    url = ''
+  [[params.socials]]
+    label = 'Mamoru Lab on LinkedIn'
+    icon = 'linkedin'
+    url = ''
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+[sitemap]
+  changeFreq = 'monthly'
+
+[module]
+  # Tested with Hugo 0.154.5 and 0.169.0 (the version the GitHub workflow uses)
+  [module.hugoVersion]
+    min = '0.154.0'
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  # The brand masters (logo, pattern) live in brand/ and are used from there
+  [[module.mounts]]
+    source = 'brand'
+    target = 'assets/brand'

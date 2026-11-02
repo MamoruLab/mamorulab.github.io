@@ -1,0 +1,10 @@
+{{- /*
+  Text split into words that rise into place, once, when their [data-words] container comes into view
+  (assets/js/reveal.js). Real spaces between the word spans, so screen readers and copy-paste don't run the words
+  together.
+  Params: text, class
+*/ -}}
+{{- $class := .class -}}
+{{- range split .text " " -}}
+<span class="inline-block whitespace-nowrap overflow-hidden align-top"><span class="inline-block {{ $class }}" data-word>{{ . }}</span></span>{{ " " }}
+{{- end -}}
